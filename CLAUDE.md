@@ -1,38 +1,27 @@
 # CLAUDE.md
 
-HonoとTypeScriptを使用したWebアプリケーションプロジェクト
-
-## コマンド
-
-```bash
-npm install     # 依存関係のインストール
-npm run dev     # 開発サーバー起動（ホットリロード付き）
-npm run build   # 本番ビルド
-npm start       # 本番サーバー起動
-npm test        # テスト実行
-npm run test:watch # テスト監視モード
-```
-
-## 構成
-
-- **フレームワーク**: Hono + @hono/node-server
-- **エントリポイント**: `src/index.ts` (ポート3000)
-- **ビルド出力**: `./dist`
-- **コードスタイル**: Biome（タブ、ダブルクォート）
-- **TypeScript**: ESNext/NodeNext、strict mode、Hono JSX対応
-- **アーキテクチャ**: VSA（Vertical Slice Architecture）
-- **データベース**: PostgreSQL + Drizzle ORM
-- **設計パターン**: 軽量なCQRSパターン（Command/Queryをディレクトリで分離）
-- **ビジネスロジック**: 仕様パターンと戦略パターンを活用
+## 技術スタック
+- **Hono** + @hono/node-server (ポート3000)
+- **TypeScript** ESNext/NodeNext、strict mode
+- **PostgreSQL** + Drizzle ORM
+- **Biome** (タブ、ダブルクォート)
+- **VSA** (Vertical Slice Architecture) + 軽量CQRS
 
 ## 開発ルール
+- コミット: Conventional Commits準拠、日本語
+- TDD、npm run dev使用禁止
+- Context7 MCPでライブラリ調査
 
-- コミットメッセージはConventional Commitsに準拠する
-- コミットメッセージは日本語で記述する
-- 実装計画はGitHub issueで管理する
-- ライブラリやフレームワークの最新情報はContext7 MCPを使用して調べる
+### 型配置ルール（VSA）
+- **共通型**: `src/shared/types/` (`Pagination`, `ApiResponse<T>`)
+- **機能別型**: `src/features/[feature]/types.ts`
+- 機能間依存を最小化
 
-## 備考
+### 型安全性
+- **any型禁止**: unknown、union型、型ガード使用
+- strict mode有効
 
-- テストフレームワーク: Vitest
-- RealWorldアプリケーションのスターターテンプレート
+### Biome設定
+- `noExplicitAny`: error
+- `useNodejsImportProtocol`: error (`node:`必須)
+- `noNonNullAssertion`: warn
