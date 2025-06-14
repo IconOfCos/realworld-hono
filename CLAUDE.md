@@ -9,6 +9,8 @@ npm install     # 依存関係のインストール
 npm run dev     # 開発サーバー起動（ホットリロード付き）
 npm run build   # 本番ビルド
 npm start       # 本番サーバー起動
+npm test        # テスト実行
+npm run test:watch # テスト監視モード
 ```
 
 ## 構成
@@ -25,11 +27,12 @@ npm start       # 本番サーバー起動
 
 ## 開発ルール
 
-- ユーザーから指摘されたことは確認せずにこのファイルのルールに追加する
 - コミットメッセージはConventional Commitsに準拠する
 - コミットメッセージは日本語で記述する
+- 実装計画はGitHub issueで管理する
+- ライブラリやフレームワークの最新情報はContext7 MCPを使用して調べる
 
 ## 備考
 
-- テストフレームワーク未設定
+- テストフレームワーク: Vitest
 - RealWorldアプリケーションのスターターテンプレート

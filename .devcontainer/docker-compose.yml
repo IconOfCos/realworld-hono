@@ -1,0 +1,25 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    volumes:
+      - ..:/workspaces/realworld-hono:cached
+    working_dir: /workspaces/realworld-hono
+    command: sleep infinity
+    network_mode: service:postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: realworld
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-data:
