@@ -1,50 +1,35 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+HonoとTypeScriptを使用したWebアプリケーションプロジェクト
 
-## Project Overview
-
-This is a Hono-based web application with TypeScript. Hono is a lightweight, ultrafast web framework for the edge.
-
-## Essential Commands
+## コマンド
 
 ```bash
-# Install dependencies
-npm install
-
-# Development (with hot reload)
-npm run dev
-
-# Build for production
-npm run build
-
-# Run production build
-npm start
+npm install     # 依存関係のインストール
+npm run dev     # 開発サーバー起動（ホットリロード付き）
+npm run build   # 本番ビルド
+npm start       # 本番サーバー起動
 ```
 
-## Code Architecture
+## 構成
 
-- **Framework**: Hono with Node.js server adapter (@hono/node-server)
-- **Entry Point**: `src/index.ts` - Main server file that starts on port 3000
-- **Build Output**: `./dist` directory (TypeScript compiles here)
-- **Code Style**: Biome for linting and formatting (uses tabs, double quotes)
+- **フレームワーク**: Hono + @hono/node-server
+- **エントリポイント**: `src/index.ts` (ポート3000)
+- **ビルド出力**: `./dist`
+- **コードスタイル**: Biome（タブ、ダブルクォート）
+- **TypeScript**: ESNext/NodeNext、strict mode、Hono JSX対応
+- **アーキテクチャ**: VSA（Vertical Slice Architecture）
+- **データベース**: PostgreSQL + Drizzle ORM
+- **設計パターン**: 軽量なCQRSパターン（Command/Queryをディレクトリで分離）
+- **ビジネスロジック**: 仕様パターンと戦略パターンを活用
 
-## TypeScript Configuration
+## 開発ルール
 
-- Target: ESNext with NodeNext module system
-- Strict mode enabled
-- JSX configured for Hono's JSX runtime
-- Source maps enabled for debugging
+- ユーザーから指摘されたことは確認せずにこのファイルのルールに追加する
+- コミットメッセージはConventional Commitsに準拠する
+- コミットメッセージは日本語で記述する
 
-## Development Workflow
+## 備考
 
-1. Make changes in `src/` directory
-2. Use `npm run dev` for development with automatic restart
-3. Biome handles formatting and linting automatically
-4. Build with `npm run build` before deploying
-
-## Important Notes
-
-- No testing framework is currently set up
-- This appears to be a starter template for a RealWorld application
-- The codebase is minimal - just a basic Hono server setup ready for expansion
+- テストフレームワーク未設定
+- RealWorldアプリケーションのスターターテンプレート
