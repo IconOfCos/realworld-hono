@@ -20,7 +20,7 @@ export const errorHandler: ErrorHandler = (error: Error, c: Context) => {
 
 		switch (status) {
 			case 401:
-				return authErrorResponse(c);
+				return authErrorResponse(c, error.message);
 			case 422: {
 				// バリデーションエラーの場合、エラーから詳細を抽出
 				const validationErrors = extractValidationErrors(error);

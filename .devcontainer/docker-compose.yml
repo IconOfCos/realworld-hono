@@ -20,6 +20,15 @@ services:
       POSTGRES_DB: realworld
     ports:
       - "5432:5432"
+  postgres-for-test:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres-test
+      POSTGRES_USER: postgres-test
+      POSTGRES_DB: realworld-test
+    ports:
+      - "5433:5432"
 
 volumes:
   postgres-data:

@@ -1,5 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { authRoutes } from "./features/auth/routes.js";
 import { config } from "./shared/config/env.js";
 import { type AuthVariables, getCurrentUser, injectUser, optionalAuth, requireAuth } from "./shared/middleware/auth.js";
 import { corsMiddleware } from "./shared/middleware/cors.js";
@@ -39,14 +40,12 @@ app.get("/api/profile", optionalAuth(), injectUser(), (c) => {
 	});
 });
 
-// 認証必須のルート例
-app.get("/api/user", requireAuth(), injectUser(), (c) => {
-	const user = getCurrentUser(c);
-	return jsonResponse(c, { user });
-});
-
-// APIルート用プレフィックス設定（今後の機能実装用）
+// APIルート用プレフィックス設定
 const api = new Hono<{ Variables: AuthVariables }>();
+
+// 認証ルートを追加
+api.route("/", authRoutes);
+
 app.route("/api", api);
 
 serve(

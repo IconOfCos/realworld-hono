@@ -1,5 +1,4 @@
 import type { Context, MiddlewareHandler, Next } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { jwt } from "hono/jwt";
 import type { JwtVariables } from "hono/jwt";
 import { config } from "../config/env.js";
@@ -11,7 +10,7 @@ export interface AuthUser {
 }
 
 export interface JwtPayload {
-	sub: string;
+	sub?: string;
 	email?: string;
 	username?: string;
 	iat?: number;
@@ -52,7 +51,7 @@ const processAuthToken = async (
 		await jwtMiddleware(c, next);
 	} catch (error) {
 		if (isRequired) {
-			throw new HTTPException(401, { message: "Invalid token" });
+			return c.json({ errors: { body: ["Invalid token"] } }, 401);
 		}
 		// 任意認証なので開発環境でのみ警告を出力
 		if (process.env.NODE_ENV === "development") {
@@ -68,7 +67,7 @@ export const requireAuth = (): MiddlewareHandler => {
 		const authHeader = c.req.header("Authorization");
 
 		if (!authHeader || !authHeader.startsWith("Token ")) {
-			throw new HTTPException(401, { message: "Invalid token format" });
+			return c.json({ errors: { body: ["Invalid token format"] } }, 401);
 		}
 
 		return processAuthToken(c, next, authHeader, true);
@@ -94,7 +93,7 @@ export const injectUser = () => {
 	return async (c: Context<{ Variables: AuthVariables }>, next: Next) => {
 		const payload = c.get("jwtPayload");
 
-		if (payload) {
+		if (payload?.sub) {
 			// 実際の実装では、データベースからユーザー情報を取得
 			// ここではペイロードから基本情報を抽出
 			const user: AuthUser = {

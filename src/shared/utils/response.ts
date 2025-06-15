@@ -58,8 +58,8 @@ export const validationErrorResponse = (c: Context, errors: Record<string, strin
 	return c.json(response, 422);
 };
 
-export const authErrorResponse = (c: Context) => {
-	return c.json({}, 401);
+export const authErrorResponse = (c: Context, message = "認証が必要です") => {
+	return c.json({ errors: { body: [message] } }, 401);
 };
 
 export const internalErrorResponse = (c: Context, message?: string, code?: string) => {

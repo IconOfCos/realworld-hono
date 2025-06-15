@@ -9,7 +9,8 @@
 
 ## 開発ルール
 - コミット: Conventional Commits準拠、日本語
-- TDD、npm run dev使用禁止
+- npm run dev使用禁止
+- TDDで実装
 - Context7 MCPでライブラリ調査
 - テスト名は日本語にする
 - Parse, don't validate
