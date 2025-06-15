@@ -1,4 +1,10 @@
 export const config = {
+	DATABASE_URL:
+		process.env.DATABASE_URL ||
+		(() => {
+			throw new Error("DATABASE_URL is required");
+		})(),
+	DB_MAX_CONNECTIONS: process.env.DB_MAX_CONNECTIONS || "20",
 	jwt: {
 		secret:
 			process.env.JWT_SECRET ||

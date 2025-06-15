@@ -1,10 +1,18 @@
 import type { Context, ErrorHandler, Next } from "hono";
 import { HTTPException } from "hono/http-exception";
+import { ZodError } from "zod";
 import { logger } from "../utils/logger.js";
+import { flattenZodError } from "../utils/parse.js";
 import { authErrorResponse, internalErrorResponse, validationErrorResponse } from "../utils/response.js";
 
 export const errorHandler: ErrorHandler = (error: Error, c: Context) => {
 	logger.error("Error:", error);
+
+	// ZodErrorの場合
+	if (error instanceof ZodError) {
+		const validationErrors = flattenZodError(error);
+		return validationErrorResponse(c, validationErrors);
+	}
 
 	// HTTPExceptionの場合
 	if (error instanceof HTTPException) {
@@ -36,6 +44,10 @@ const extractValidationErrors = (error: HTTPException): Record<string, string[]>
 	// 構造化されたバリデーションエラーを適切に処理
 	if (error.cause && typeof error.cause === "object") {
 		// バリデーションライブラリからの構造化エラーを処理
+		// causeにerrorsプロパティがある場合（validateBodyミドルウェアから）
+		if ("errors" in error.cause && typeof error.cause.errors === "object") {
+			return error.cause.errors as Record<string, string[]>;
+		}
 		return processStructuredErrors(error.cause);
 	}
 

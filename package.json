@@ -14,11 +14,16 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.14.4",
-    "hono": "^4.7.11"
+    "drizzle-orm": "^0.44.2",
+    "drizzle-zod": "^0.8.2",
+    "hono": "^4.7.11",
+    "postgres": "^3.4.7",
+    "zod": "^3.25.64"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^20.11.17",
+    "drizzle-kit": "^0.31.1",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3",
     "vitest": "^3.2.3"

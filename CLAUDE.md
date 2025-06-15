@@ -11,6 +11,8 @@
 - コミット: Conventional Commits準拠、日本語
 - TDD、npm run dev使用禁止
 - Context7 MCPでライブラリ調査
+- テスト名は日本語にする
+- Parse, don't validate
 
 ### 型配置ルール（VSA）
 - **共通型**: `src/shared/types/` (`Pagination`, `ApiResponse<T>`)
